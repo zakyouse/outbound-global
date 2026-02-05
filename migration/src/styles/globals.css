@@ -1,0 +1,16 @@
+@import "tailwindcss";
+@import "react-datepicker/dist/react-datepicker.css";
+
+
+@config "../../tailwind.config.js";
+.mask-gradient {
+  mask-image: linear-gradient(
+    to left,
+    rgba(0,0,0,1),
+    rgba(0,0,0,0.6),
+    rgba(0,0,0,0)
+  );
+}
+*{
+   font-family: "Teachers", sans-serif;
+}
