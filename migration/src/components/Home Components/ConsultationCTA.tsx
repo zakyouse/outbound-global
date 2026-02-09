@@ -37,7 +37,7 @@ const ConsultationCTA = () => {
           </ul>
 
           <p className="mt-4 font-medium text-gray-900">
-            Consultation Fee: <span className="text-blue-600">$150</span>
+            Consultation Fee: <span className="text-blue-600">$100</span>
           </p>
         </div>
 

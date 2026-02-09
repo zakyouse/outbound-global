@@ -55,10 +55,10 @@ const Services = () => {
 
           <p className="text-gray-700 leading-relaxed">
             We focus on EB-1 Extraordinary Ability, EB-2 National Interest
-            Waiver (NIW), and select non-immigrant visas, including F-1 and F-2
-            student visas. Our services are designed to help you present your
-            background, achievements, and proposed endeavor in a way that is
-            consistent, structured, and easy to review.
+            Waiver (NIW), and select non-immigrant visas. Our services are
+            designed to help you present your background, achievements, and
+            proposed endeavor in a way that is consistent, structured, and easy
+            to review.
           </p>
         </section>
 
@@ -83,7 +83,7 @@ const Services = () => {
             </p>
 
             <p className="font-semibold text-gray-900 mb-6">
-              Consultation Fee: $150
+              Consultation Fee: $100
             </p>
 
             <Button
@@ -120,17 +120,17 @@ const Services = () => {
             ensure clarity and consistency across your submission.
           </p>
 
-          <button
-            className="border border-blue-600 cursor-pointer text-blue-600 px-6 py-3 rounded-lg hover:bg-blue-50 transition"
-            onClick={() => navigate("/contacts")}
+          <Button
+            className="bg-mygreen cursor-pointer px-6 py-3 rounded-lg hover:bg-mygreen/80 transition"
+            onPress={() => navigate("/contacts")}
           >
             Request EB-1A Support
-          </button>
+          </Button>
         </section>
 
         {/* EB-2 NIW */}
-        <section className="bg-gray-50 py-4 px-6 md:px-12">
-          <div className="max-w-5xl mx-auto">
+        <section className="bg-gray-50 py-4 max-w-full mx-auto px-6 md:px-12">
+          <div className="">
             <h2 className="text-3xl font-bold mb-6">
               EB-2 National Interest Waiver (NIW) Support
             </h2>
@@ -148,17 +148,17 @@ const Services = () => {
               as part of our administrative support services.
             </p>
 
-            <button
-              className="border border-blue-600 cursor-pointer text-blue-600 px-6 py-3 rounded-lg hover:bg-blue-50 transition"
-              onClick={() => navigate("/contacts")}
+            <Button
+              className="bg-mygreen cursor-pointer  py-3 rounded-lg hover:bg-mygreen/80 transition"
+              onPress={() => navigate("/contacts")}
             >
               Request EB-2 NIW Support
-            </button>
+            </Button>
           </div>
         </section>
 
         {/* Petition Drafting */}
-        <section className="max-w-5xl mx-auto px-6 md:px-12 my-4">
+        <section className="max-w-full mx-auto px-6 md:px-12  my-4">
           <h2 className="text-3xl font-bold mb-6">
             Petition Drafting & Review Services
           </h2>
@@ -176,17 +176,17 @@ const Services = () => {
             and to improve organization and formatting prior to filing.
           </p>
 
-          <button
-            className="border border-blue-600 cursor-pointer text-blue-600 px-6 py-3 rounded-lg hover:bg-blue-50 transition"
-            onClick={() => navigate("/contacts")}
+          <Button
+            className="bg-mygreen cursor-pointer  py-3 rounded-lg hover:bg-mygreen/80 transition"
+            onPress={() => navigate("/contacts")}
           >
             Request Petition Review
-          </button>
+          </Button>
         </section>
 
         {/* Adjustment of Status */}
-        <section className="bg-gray-50 py-20 px-6 md:px-12">
-          <div className="max-w-5xl mx-auto">
+        <section className="bg-gray-50 py-20  max-w-full mx-auto px-6 md:px-12">
+          <div className="">
             <h2 className="text-3xl font-bold mb-6">
               Adjustment of Status & Consular Processing Support
             </h2>
@@ -203,17 +203,17 @@ const Services = () => {
               with USCIS requirements.
             </p>
 
-            <button
-              className="border border-blue-600 cursor-pointer text-blue-600 px-6 py-3 rounded-lg hover:bg-blue-50 transition"
-              onClick={() => navigate("/contacts")}
+            <Button
+              className="bg-mygreen cursor-pointer  py-3 rounded-lg hover:bg-mygreen/80 transition"
+              onPress={() => navigate("/contacts")}
             >
               Request Form Support
-            </button>
+            </Button>
           </div>
         </section>
 
         {/* Disclaimer */}
-        <section className="max-w-5xl mx-auto px-6 md:px-12 my-2 text-sm text-gray-600">
+        <section className="max-w-full mx-auto px-6 md:px-12   my-2 text-sm text-gray-600">
           <p>
             Disclaimer: Outbound Global Pathways LLC provides immigration
             consulting and administrative support services only. We are not a

@@ -55,14 +55,14 @@ export default function Contact() {
                   <span className="h-5 w-5 text-primary flex items-center">
                     <FaPhoneFlip color="currentColor" size={20} />
                   </span>
-                  <span>+254 7XX XXX XXX</span>
+                  <span>+18146898466</span>
                 </div>
 
                 <div className="flex items-center gap-3 text-gray-700">
                   <span className="h-5 w-5 text-primary flex items-center">
                     <FaMapPin color="currentColor" size={20} />
                   </span>
-                  <span>Nairobi, Kenya</span>
+                  <span>State College, PA</span>
                 </div>
               </div>
             </motion.div>

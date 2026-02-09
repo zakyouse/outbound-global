@@ -21,7 +21,7 @@ export default function ConsultationForm() {
           Book a Consultation
         </h2>
 
-        <form className="flex flex-col md:grid grid-cols-2 gap-6">
+        <form className="flex flex-col md:grid grid-cols-2 gap-2 md:gap-6">
           {/* Name */}
           <Input
             isRequired
@@ -56,8 +56,9 @@ export default function ConsultationForm() {
             label="Country"
             type="text"
           />
-          {/* Date Picker */}
-          <div className="flex flex-col">
+          <div className="grid grid-cols-2 gap-4 col-span-2">
+            {/* Date Picker */}
+          <div className="flex flex-col ">
             <label className="text-sm font-medium" htmlFor="date">
               Preferred Date
             </label>
@@ -74,7 +75,7 @@ export default function ConsultationForm() {
           </div>
 
           {/* Time Selector */}
-          <div>
+          <div className=" ">
             <label className="text-sm font-medium" htmlFor="time">
               Preferred Time
             </label>
@@ -92,6 +93,8 @@ export default function ConsultationForm() {
               ))}
             </select>
           </div>
+          </div>
+          
 
           {/* CV Upload */}
           <Input
@@ -128,7 +131,7 @@ export default function ConsultationForm() {
             Submit Request
           </button>
           <Button
-            className="relative md:absolute top-4 right-4 black/5 md:black/20 w-full col-span-2 h-12 ml-4 -mt-8 md:mt-2 md:w-24 rounded-full"
+            className="relative md:absolute top-4 right-4 black/5 md:black/20 w-full col-span-2 h-12 ml-4 md:mt-2 md:w-24 rounded-full"
             startContent={<span className="text-sm md:text-lg">✕</span>}
             variant="solid"
             onPress={() => setConsultation(false)}

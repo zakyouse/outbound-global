@@ -8,7 +8,7 @@ const HeroSection = ({ img }: { img: string }) => {
   const { consultation, setConsultation } = useConsultation();
 
   return (
-    <section className="relative z-1 overflow-hidden -top-12 rounded-xl">
+    <section className="relative z-1 overflow-hidden -top-12 rounded-xl h-screen md:h-auto">
       {/* Background Image */}
       <motion.img
         alt="Immigration consultation support"
@@ -19,7 +19,7 @@ const HeroSection = ({ img }: { img: string }) => {
           md:w-[520px] lg:w-full
           pointer-events-none
           select-none
-          mask-gradient
+          mask-gradient h-screen md:h-auto
         "
         initial={{ opacity: 0, x: 80, scale: 1.05 }}
         src={img}
@@ -32,7 +32,7 @@ const HeroSection = ({ img }: { img: string }) => {
       />
 
       {/* Content */}
-      <div className="relative z-10 flex flex-col items-start justify-center gap-4 py-8 md:py-20 px-6 md:px-12">
+      <div className="relative z-10 flex flex-col items-start justify-center gap-16 md:gap-4 py-8 md:py-20 px-6 md:px-12">
         <motion.div
           animate={{ opacity: 1, y: 0 }}
           className="max-w-xl"
@@ -51,7 +51,7 @@ const HeroSection = ({ img }: { img: string }) => {
             We simplify the immigration process by providing clear immigration
             consulting and administrative support for individuals pursuing EB-1
             Extraordinary Ability, EB-2 National Interest Waiver (NIW), and
-            select non-immigrant visas, including F-1/F-2 student visas.
+            select non-immigrant visas.
           </div>
         </motion.div>
 

@@ -71,7 +71,7 @@ export const Navbar = () => {
           ))}
         </div>
       </NavbarContent>
-      <NavbarMenuToggle className="z-30 md:hidden cursor-pointer" />
+      <NavbarMenuToggle className="z-30 lg:hidden cursor-pointer" />
       <div className="flex items-center gap-6">
         <NavbarContent
           className="hidden sm:flex basis-1/5 sm:basis-full"
@@ -90,7 +90,7 @@ export const Navbar = () => {
           <ThemeSwitch />
         </NavbarItem>
         <NavbarItem className="hidden lg:flex">{searchInput}</NavbarItem> */}
-          <NavbarItem className="hidden md:flex">
+          <NavbarItem className="hidden lg:flex">
             <Button
               isExternal
               as={Link}

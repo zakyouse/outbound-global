@@ -1,3 +1,5 @@
+import hero_image from "../images/about_page/pexels-yankrukov-7640434.jpg";
+
 import DefaultLayout from "@/layouts/default";
 import WhyChooseUs from "@/components/Home Components/why_choose_us";
 import ImpactStats from "@/components/Home Components/stats";
@@ -5,13 +7,16 @@ import ServicesSection from "@/components/Home Components/service_section";
 import ConsultationCTA from "@/components/Home Components/ConsultationCTA";
 import FAQSection from "@/components/Home Components/FAQ";
 import ReviewsSlider from "@/components/Home Components/ReviewSlider";
-import hero_image from "../images/about_page/pexels-yankrukov-7640434.jpg";
 
 const AboutUs = () => {
   return (
     <DefaultLayout>
       <main className="bg-white text-gray-900">
-        <img src={hero_image} alt="hero image" className="w-full object-cover h-84 rounded-lg object-right-bottom"/>
+        <img
+          alt="hero image"
+          className="w-full object-cover h-84 rounded-lg object-right-bottom"
+          src={hero_image}
+        />
 
         {/* About Content */}
         <section className="max-w-screen mx-auto px-6 md:px-12 my-10">
@@ -24,7 +29,7 @@ const AboutUs = () => {
             administrative support services to individuals and families pursuing
             U.S. immigration pathways. We focus on supporting clients seeking
             EB-1 Extraordinary Ability, EB-2 National Interest Waiver (NIW), and
-            select non-immigrant visas, including F-1 and F-2 student visas.
+            select non-immigrant visas.
           </p>
 
           <p className="text-gray-700 leading-relaxed mb-6">
