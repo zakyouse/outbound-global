@@ -21,8 +21,8 @@ function Sidebar({setUserId}) {
         <div className='flex flex-col gap-2 pb-8 overflow-hidden'>
             <Link className='hover:bg-transparent hover:text-[#d13800] transition-all duration-500 flex gap-2 items-center rounded-md p-2' to="/"><span className='w-8 h-8 rounded-full bg-[#009340] grid place-content-center'><BiSolidHome className=''/></span> Home</Link>
             <Link className='hover:bg-transparent hover:text-[#d13800] transition-all duration-500  flex gap-2 items-center rounded-md p-2' to="/messages"><span className='w-8 h-8 rounded-full bg-[#009340] grid place-content-center'><BsMessenger className=''/></span>Messages</Link>
-            <Link className='hover:bg-transparent hover:text-[#d13800] transition-all duration-500  flex gap-2 items-center rounded-md p-2' to="/testimonials"><span className='w-8 h-8 rounded-full bg-[#009340] grid place-content-center'><BsQuote className=''/></span>Consultations</Link>
-            <Link className='hover:bg-transparent hover:text-[#d13800] transition-all duration-500  flex gap-2 items-center rounded-md p-2' to="/photos"><span className='w-8 h-8 rounded-full bg-[#009340] grid place-content-center'><BsImage className=''/></span>Resourses</Link>
+            <Link className='hover:bg-transparent hover:text-[#d13800] transition-all duration-500  flex gap-2 items-center rounded-md p-2' to="/consultations"><span className='w-8 h-8 rounded-full bg-[#009340] grid place-content-center'><BsQuote className=''/></span>Consultations</Link>
+            <Link className='hover:bg-transparent hover:text-[#d13800] transition-all duration-500  flex gap-2 items-center rounded-md p-2' to="/resources"><span className='w-8 h-8 rounded-full bg-[#009340] grid place-content-center'><BsImage className=''/></span>Resourses</Link>
         </div>
         <div className="flex flex-col gap-2 overflow-hidden">
             <button onClick={()=>navigate("/settings")} className='flex gap-2 items-center justify-center border-2 transition-all duration-500 border-[#007fd5] hover:bg-[#007fd5] hover:text-white p-2 w-full rounded-full text-[#007fd5]'><BsGear/>Settings</button>

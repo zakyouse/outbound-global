@@ -4,36 +4,36 @@ import { toast,ToastContainer } from "react-toastify";
 
 
 const Settings = ({ userId }) => {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-
+console.log(userId)
   // Function to update username
-  const handleUsernameChange = async (e) => {
-    e.preventDefault();
+  // const handleUsernameChange = async (e) => {
+  //   e.preventDefault();
 
-    if (username.trim() === "") {
-      toast.error("Username cannot be empty.");
-      return;
-    }
+  //   if (username.trim() === "") {
+  //     toast.error("Username cannot be empty.");
+  //     return;
+  //   }
 
-    try {
-      const response = await axios.post("http://local:3000/api/users.php", {
-        action: "username",
-        id: userId,
-        userName: username,
-      });
+  //   try {
+  //     const response = await axios.post("http://local:3000/api/users.php", {
+  //       action: "username",
+  //       id: userId,
+  //       userName: username,
+  //     });
       
-      if (response.data.success) {
-        toast.success("Username updated successfully!");
-      } else {
-        toast.error("Failed to update username.");
-      }
-    } catch (error) {
-      console.error("Username Update Error:", error);
-      toast.error("An error occurred while updating username.");
-    }
-  };
+  //     if (response.data.success) {
+  //       toast.success("Username updated successfully!");
+  //     } else {
+  //       toast.error("Failed to update username.");
+  //     }
+  //   } catch (error) {
+  //     console.error("Username Update Error:", error);
+  //     toast.error("An error occurred while updating username.");
+  //   }
+  // };
 
   // Function to update password
   const handlePasswordChange = async (e) => {
@@ -43,19 +43,20 @@ const Settings = ({ userId }) => {
       toast.error("Password must be at least 6 characters long.");
       return;
     }
-    if (password !== confirmPassword) {
-      toast.error("Passwords do not match.");
-      return;
-    }
+    // if (password !== confirmPassword) {
+    //   toast.error("Passwords do not match.");
+    //   return;
+    // }
 
     try {
-      const response = await axios.post("http://local:3000/api/users.php", {
-        action: "password",
-        id: userId,
-        password: password,
+      const response = await axios.post("http://localhost:3000/login.php", {
+        action: "change_password",
+      email: email,
+        old_password: password,
+        new_password: confirmPassword,
       });
-
-      if (response.data.success) {
+console.log(response)
+      if (response.status==200) {
         toast.success("Password changed successfully!");
         setPassword("");
         setConfirmPassword("");
@@ -74,26 +75,26 @@ const Settings = ({ userId }) => {
       <h2 className="text-2xl font-semibold text-[#007fd5] mb-6">Settings</h2>
 
       {/* Change Username Form */}
-      <form onSubmit={handleUsernameChange} className="mb-6">
+      <form  className="mb-6">
         <label className="block text-gray-700 font-medium mb-2">Username</label>
         <input
           type="text"
           className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#007fd5]"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
-        <button
+        {/* <button
           type="submit"
           className="mt-3 bg-[#007fd5] text-white py-2 px-4 rounded-lg shadow-md hover:bg-red-700 transition"
         >
           Update Username
-        </button>
+        </button> */}
       </form>
 
       {/* Change Password Form */}
       <form onSubmit={handlePasswordChange}>
         <label className="block text-gray-700 font-medium mb-2">
-          New Password
+          Old Password
         </label>
         <input
           type="password"
@@ -103,7 +104,7 @@ const Settings = ({ userId }) => {
         />
 
         <label className="block text-gray-700 font-medium mt-4 mb-2">
-          Confirm Password
+          New Password
         </label>
         <input
           type="password"

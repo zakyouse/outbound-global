@@ -8,7 +8,7 @@ import { ToastContainer,toast } from "react-toastify";
 const Messages = () => {
    async function fetch_messages() {
       try {
-        const response=await axios.get("http://local:3000/api/messages.php")
+        const response=await axios.get("http://localhost:3000/messages.php")
         setMessages(response.data)
       } catch (error) {
         console.error(error)
@@ -29,8 +29,8 @@ const Messages = () => {
 
   const markAsRead =async (id) => {  
     try {
-      const response=await axios.post("http://local:3000/api/messages.php",{action:"toggle_read",id:id})
-      if (response.data.success) {
+      const response=await axios.post("http://localhost:3000/messages.php",{action:"toggle_read",id:id})
+      if (response.status==200) {
         fetch_messages()
         toast.success("Changes saved successfully")
       }else{
@@ -44,8 +44,8 @@ const Messages = () => {
 
   const deleteMessage =async (id) => {
     try {
-      const response=await axios.post("http://local:3000/api/messages.php",{action:"delete",id:id})
-      if (response.data.success) {
+      const response=await axios.post("http://localhost:3000/messages.php",{action:"delete",id:id})
+      if (response.status==200) {
         fetch_messages()
         toast.success("1 Message deleted successfully")
       }else{

@@ -1,32 +1,70 @@
 import { useParams } from "react-router-dom";
-
+import { useEffect, useState } from "react";
 import DefaultLayout from "@/layouts/default";
-const articles = {
-  "canada-work-permit-guide": {
-    title: "Complete Guide to Canada Work Permits",
-    image: "/images/canada.jpg",
-    date: "March 12, 2026",
-    content: `
-Canada offers several work permit options for foreign nationals.
-These include employer-specific permits and open work permits.
+import axios from "axios";
+import { Link } from "react-router-dom";
+import { VscLoading } from "react-icons/vsc";
 
-To qualify, applicants must meet eligibility requirements such as
-job offers, LMIA approval, or spousal sponsorship...
-    `,
-  },
-};
+interface Resource {
+  id: number;
+  slug: string;
+  title: string;
+  excerpt: string;
+  content: string;
+  category: string;
+  image: string;
+  created_at: string;
+  published: number;
+}
 
 export default function ResourceArticle() {
-  const { slug } = useParams();
-  const article =
-    slug && slug in articles
-      ? articles[slug as keyof typeof articles]
-      : undefined;
+  const { slug } = useParams<{ slug: string }>();
+  const [resource, setResource] = useState<Resource | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-  if (!article) {
+  useEffect(() => {
+    const fetchResource = async () => {
+      try {
+        setLoading(true);
+        const res = await axios.get("http://localhost:3000/resources.php");
+        const allResources: Resource[] = res.data;
+
+        // Find resource by slug
+        const found = allResources.find((r) => r.slug === slug);
+
+        if (!found) {
+          setError("Resource not found");
+          setResource(null);
+        } else {
+          setResource(found);
+        }
+      } catch (err) {
+        console.error(err);
+        setError("Failed to load resource");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (slug) fetchResource();
+  }, [slug]);
+
+  if (loading) {
+    return (
+      <div className="py-24 text-center text-gray-500 flex justify-center items-center">
+        <span className="animate-spin mr-2">
+          <VscLoading size={24} />
+        </span>
+        Loading...
+      </div>
+    );
+  }
+
+  if (error || !resource) {
     return (
       <div className="py-24 text-center">
-        <h2 className="text-2xl font-semibold">Article not found</h2>
+        <h2 className="text-2xl font-semibold">{error || "Resource not found"}</h2>
       </div>
     );
   }
@@ -34,19 +72,28 @@ export default function ResourceArticle() {
   return (
     <DefaultLayout>
       <section className="py-24 px-4">
-        <div className="mx-auto max-w-3xl">
-          <img
-            alt={article.title}
-            className="rounded-2xl mb-8"
-            src={article.image}
-          />
+        <Link to="/resources" className="text-sm text-gray-400 mb-4 inline-block">
+          &larr; Back to Resources
+        </Link>
+        <div className="mx-auto max-w-3xl space-y-6">
+          {resource.image && (
+            <img
+              alt={resource.title}
+              className="rounded-2xl mb-8 w-full object-cover"
+              src={`http://localhost:3000/${resource.image}`}
+            />
+          )}
 
-          <h1 className="text-3xl font-bold mb-2">{article.title}</h1>
+          <h1 className="text-3xl font-bold">{resource.title}</h1>
 
-          <p className="text-sm text-gray-400 mb-8">{article.date}</p>
+          <p className="text-sm text-gray-400">
+            {new Date(resource.created_at).toLocaleDateString()} |{" "}
+            <span className="capitalize">{resource.category}</span>
+          </p>
 
           <div className="prose prose-lg max-w-none text-gray-700">
-            {article.content}
+            {/* Display HTML content properly */}
+            <div dangerouslySetInnerHTML={{ __html: resource.content }} />
           </div>
         </div>
       </section>

@@ -2,117 +2,167 @@ import { Button } from "@heroui/button";
 import { useState } from "react";
 import DatePicker from "react-datepicker";
 import { Input } from "@heroui/input";
+import axios from "axios";
 
 import { useConsultation } from "@/contexts/consultationContext";
+
 export default function ConsultationForm() {
+  const { setConsultation } = useConsultation();
+
+  // FORM STATE
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [country, setCountry] = useState("");
+  const [serviceType, setServiceType] = useState("");
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [selectedTime, setSelectedTime] = useState("");
-  const { setConsultation } = useConsultation();
+  const [cv, setCv] = useState<File | null>(null);
+  const [loading, setLoading] = useState(false);
+
   // Disable Sundays
   const isSunday = (date: Date) => date.getDay() === 0;
 
-  // Allowed times
   const availableTimes = ["07:00", "08:00", "09:00", "10:00", "11:00"];
 
+  async function submitConsultation(e: React.FormEvent) {
+    e.preventDefault();
+
+    if (!selectedDate) {
+      alert("Please select a date");
+
+      return;
+    }
+
+    const formData = new FormData();
+
+    formData.append("full_name", fullName);
+    formData.append("email", email);
+    formData.append("phone", phone);
+    formData.append("country", country);
+    formData.append("preferred_date", selectedDate.toISOString().split("T")[0]);
+    formData.append("preferred_time", selectedTime);
+    formData.append("service_type", serviceType);
+
+    if (cv) {
+      formData.append("cv", cv);
+    }
+
+    try {
+      setLoading(true);
+
+      const response = await axios.post(
+        "http://localhost:3000/consultation.php",
+        formData,
+        { headers: { "Content-Type": "multipart/form-data" } },
+      );
+console.log(response)
+      alert(response.data.message);
+      setConsultation(false);
+    } catch (error: any) {
+      alert(error?.response?.data?.message || "Failed to submit consultation");
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
-    <section className="flex items-center justify-center bg-white/10 backdrop-blur-sm fixed top-0 left-0 z-99 min-h-screen w-full py-4">
-      <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-lg p-8">
+    <section className="flex items-center justify-center bg-white/10 backdrop-blur-sm fixed inset-0 z-50">
+      <div className="max-w-3xl w-full mx-auto bg-white rounded-2xl shadow-lg p-8">
         <h2 className="text-3xl font-bold mb-6 text-center text-mygreen">
           Book a Consultation
         </h2>
 
-        <form className="flex flex-col md:grid grid-cols-2 gap-2 md:gap-6">
-          {/* Name */}
+        <form
+          className="grid grid-cols-1 md:grid-cols-2 gap-4"
+          onSubmit={submitConsultation}
+        >
           <Input
             isRequired
-            className="max-w-xs"
-            defaultValue=""
             label="Full Name"
-            type="text"
+            value={fullName}
+            onChange={(e) => setFullName(e.target.value)}
           />
 
-          {/* Email */}
           <Input
             isRequired
-            className="max-w-xs"
-            defaultValue=""
             label="Email"
             type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
 
-          {/* Phone */}
           <Input
             isRequired
-            className="max-w-xs"
-            defaultValue=""
             label="Telephone"
             type="tel"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
           />
 
           <Input
             isRequired
-            className="max-w-xs"
-            defaultValue=""
             label="Country"
-            type="text"
+            value={country}
+            onChange={(e) => setCountry(e.target.value)}
           />
+
+          {/* Date & Time */}
           <div className="grid grid-cols-2 gap-4 col-span-2">
-            {/* Date Picker */}
-          <div className="flex flex-col ">
-            <label className="text-sm font-medium" htmlFor="date">
-              Preferred Date
-            </label>
-            <DatePicker
-              className="mt-2 w-full rounded-lg  px-4 py-3 focus:ring-2 text-black/50  bg-black/5 outline-none"
-              dateFormat="MMMM d, yyyy"
-              filterDate={(date) => !isSunday(date)}
-              minDate={new Date()}
-              placeholderText="Select a date"
-              selected={selectedDate}
-              onChange={(date: Date | null) => setSelectedDate(date)}
-              onKeyDown={(e) => e.preventDefault()} // disables typing
-            />
+            <div>
+              <label className="text-sm font-medium" htmlFor="preferred_date">
+                Preferred Date
+              </label>
+              <DatePicker
+                className="mt-2 w-full rounded-lg px-4 py-3 bg-black/5 outline-none"
+                filterDate={(date) => !isSunday(date)}
+                id="preferred_date"
+                minDate={new Date()}
+                placeholderText="Select date"
+                selected={selectedDate}
+                onChange={(date: Date | null) => setSelectedDate(date)}
+                onKeyDown={(e) => e.preventDefault()}
+              />
+            </div>
+
+            <div>
+              <label className="text-sm font-medium" htmlFor="preferred_time">
+                Preferred Time
+              </label>
+              <select
+                required
+                className="mt-2 w-full rounded-lg px-4 py-3 bg-black/5 outline-none"
+                id="preferred_time"
+                value={selectedTime}
+                onChange={(e) => setSelectedTime(e.target.value)}
+              >
+                <option value="">Select time</option>
+                {availableTimes.map((time) => (
+                  <option key={time} value={time}>
+                    {time}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
 
-          {/* Time Selector */}
-          <div className=" ">
-            <label className="text-sm font-medium" htmlFor="time">
-              Preferred Time
-            </label>
-            <select
-              required
-              className="mt-2 w-full rounded-lg text-black/50  bg-black/5 px-4 py-3 focus:ring-2 outline-none"
-              value={selectedTime}
-              onChange={(e) => setSelectedTime(e.target.value)}
-            >
-              <option value="">Select time</option>
-              {availableTimes.map((time) => (
-                <option key={time} value={time}>
-                  {time}
-                </option>
-              ))}
-            </select>
-          </div>
-          </div>
-          
-
-          {/* CV Upload */}
           <Input
             isRequired
-            className="max-w-xs"
-            defaultValue=""
             label="CV Upload"
             type="file"
+            onChange={(e) => setCv(e.target.files?.[0] || null)}
           />
 
-          {/* Service Type */}
           <div>
-            <label className="text-sm font-medium" htmlFor="serviceType">
+            <label className="text-sm font-medium" htmlFor="service_type">
               Service Type
             </label>
             <select
               required
-              className="mt-2 w-full rounded-lg  px-4 py-3 focus:ring-2 text-black/50  bg-black/5 outline-none"
+              className="mt-2 w-full rounded-lg px-4 py-3 bg-black/5 outline-none"
+              id="service_type"
+              value={serviceType}
+              onChange={(e) => setServiceType(e.target.value)}
             >
               <option value="">Select a service</option>
               <option>Consultation Session</option>
@@ -123,20 +173,20 @@ export default function ConsultationForm() {
             </select>
           </div>
 
-          {/* Submit */}
           <button
-            className="mt-4 cursor-pointer bg-secondary text-white py-3 rounded-full hover:scale-105 transition-all transition-duration-300 col-span-2 transition-ease-in-out"
+            className="col-span-2 bg-secondary text-white py-3 rounded-full hover:scale-105 transition disabled:opacity-50"
+            disabled={loading}
             type="submit"
           >
-            Submit Request
+            {loading ? "Submitting..." : "Submit Request"}
           </button>
+
           <Button
-            className="relative md:absolute top-4 right-4 black/5 md:black/20 w-full col-span-2 h-12 ml-4 md:mt-2 md:w-24 rounded-full"
-            startContent={<span className="text-sm md:text-lg">✕</span>}
-            variant="solid"
+            className="col-span-2"
+            variant="flat"
             onPress={() => setConsultation(false)}
           >
-            <span className="">Close</span>
+            Close
           </Button>
         </form>
       </div>
